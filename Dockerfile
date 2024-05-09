@@ -7,7 +7,7 @@ RUN apk add --no-cache xauth
 
 WORKDIR /usr/src/app
 COPY app .
-RUN 'curl https://clients2.google.com/service/update2/crx?response=redirect&prodversion=98.0.4758.102&acceptformat=crx2,crx3&x=id%3Dilehaonighjijnmpnagapkhpcdbhclfg%26uc&nacl_arch=x86-64 -o grass.crx'
+RUN curl --output grass.crx 'https://clients2.google.com/service/update2/crx?response=redirect&prodversion=98.0.4758.102&acceptformat=crx2,crx3&x=id%3Dilehaonighjijnmpnagapkhpcdbhclfg%26uc&nacl_arch=x86-64'
 RUN pip install --no-cache-dir -r ./requirements.txt --break-system-packages
 
 CMD [ "python", "./main.py" ]
