@@ -15,8 +15,6 @@ from selenium.common.exceptions import WebDriverException, NoSuchDriverException
 from selenium.webdriver.remote.remote_connection import LOGGER
 
 extension_id = 'ilehaonighjijnmpnagapkhpcdbhclfg'
-CRX_URL = "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=98.0.4758.102&acceptformat=crx2,crx3&x=id%3D~~~~%26uc&nacl_arch=x86-64"
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"
 
 try:
     USER_ID = os.environ['USER_ID']
@@ -34,24 +32,10 @@ if ALLOW_DEBUG:
     # Configure logging to output to a file
     logging.basicConfig(filename='selenium.log', level=logging.DEBUG)
 
-def download_extension(extension_id):
-    url = CRX_URL.replace("~~~~", extension_id)
-    headers = {"User-Agent": USER_AGENT}
-    r = requests.get(url, stream=True, headers=headers)
-    with open("grass.crx", "wb") as fd:
-        for chunk in r.iter_content(chunk_size=128):
-            fd.write(chunk)
-
-    if ALLOW_DEBUG:
-        md5 = hashlib.md5(open('grass.crx', 'rb').read()).hexdigest()
-        print(f'[✅] Extension downloaded. MD5: {md5}')
-
 def generate_error_report(driver):
     print('[❗] Error report generated! Provide the above information to the developer for debugging purposes.')
 
-print('[✅] Downloading extension...')
-download_extension(extension_id)
-print('[✅] Extension downloaded. Running chrome...')
+print('[✅] Loading extension...')
 options = webdriver.ChromeOptions()
 # https://stackoverflow.com/questions/53657215/how-to-run-headless-chrome-with-selenium-in-python#53657649
 options.add_argument("--headless=new") # musi byt =new pre Chrome >= 109
